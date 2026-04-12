@@ -1,5 +1,8 @@
+import { Link } from "react-router-dom";
+
 export default function ProductCard({ product }) {
   return (
+    <Link to={`/product/${product.id}`}>
     <div className="border p-4 rounded-lg shadow hover:shadow-lg transition">
       <img
         src={product.image}
@@ -21,5 +24,6 @@ export default function ProductCard({ product }) {
         View Details
       </button>
     </div>
+    </Link>
   );
 }
