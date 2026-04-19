@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
+import { WishlistContext } from "../../context/WishlistContext";
 
 export default function ProductCard({ product }) {
-  const { dispatch } = useContext(CartContext);
+  const { dispatch: cartDispatch } = useContext(CartContext);
+  const { wishlist, dispatch: wishlistDispatch } = useContext(WishlistContext);
+  const isInWishlist = wishlist.find((item) => item.id === product.id);
 
   return (
     <Link to={`/product/${product.id}`}>
@@ -29,6 +32,18 @@ export default function ProductCard({ product }) {
 
         <button className="mt-2 w-full bg-blue-500 text-white py-1 rounded hover:bg-blue-700 transition">
           View Details
+        </button>
+
+        <button
+          onClick={() =>
+            dispatch({
+              type: isInWishlist ? "REMOVE" : "ADD",
+              payload: isInWishlist ? product.id : product,
+            })
+          }
+          className="mt-2 w-full bg-pink-500 text-white py-1 rounded hover:bg-pink-600"
+        >
+          {isInWishlist ? "Remove from Wishlist" : "Add to Wishlist ❤️"}
         </button>
       </div>
     </Link>
